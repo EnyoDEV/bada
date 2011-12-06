@@ -12,7 +12,7 @@ set -e
 # DEFINITIONS #
 ###############
 # Toolchain paths
-TOOLCHAIN=/home/vb/toolchain/arm-2011.03/bin
+TOOLCHAIN=/home/enyo/toolchain/bin
 TOOLCHAIN_PREFIX=arm-none-linux-gnueabi-
 STRIP=${TOOLCHAIN}/${TOOLCHAIN_PREFIX}strip
 
