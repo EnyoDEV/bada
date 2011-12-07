@@ -53,36 +53,38 @@ static DEFINE_MUTEX(set_freq_lock);
 
 /* frequency */
 static struct cpufreq_frequency_table freq_table[] = {
-	{L0, 1700*1000},
-	{L1, 1600*1000},
-	{L2, 1500*1000},
-	{L3, 1440*1000},
-	{L4, 1400*1000},
-	{L5, 1300*1000},
-	{L6, 1200*1000},
+	{L0, 1900*1000},
+	{L1, 1700*1000},
+	{L2, 1580*1000},
+	{L3, 1460*1000},
+	{L4, 1300*1000},
+	{L5, 1200*1000},
+	{L6, 1150*1000},
 	{L7, 1000*1000},
 	{L8, 800*1000},
 	{L9, 400*1000},
 	{L10, 200*1000},
-	{L11, 100*1000},
+	{L11,  50*1000},
+	{L12,  19*1000},
 	{0, CPUFREQ_TABLE_END},
 };
 
 extern int exp_UV_mV[12]; //Needed for uv
 unsigned int freq_uv_table[12][3] = {
 	//freq,		stock,	current
+	{1900000,	1500,	1500},
 	{1700000,	1500,	1500},
-	{1600000,	1500,	1500},
-	{1500000,	1500,	1500},
-	{1440000,	1500,	1500},
-	{1400000,	1450,	1450},
-	{1300000,	1400,	1400},
-	{1200000,	1350,	1350},
+	{1580000,	1500,	1500},
+	{1460000,	1500,	1500},
+	{1300000,	1450,	1450},
+	{1200000,	1400,	1400},
+	{1150000,	1350,	1350},
 	{1000000,	1250,	1250},
 	{800000,	1200,	1200},
 	{400000,	1050,	1050},
 	{200000,	950,	950},
-	{100000,	950,	950}
+	{500000,	925,	925},
+	{190000,        925,    925},
 };
 
 struct s5pv210_dvs_conf {
@@ -184,8 +186,8 @@ static u32 clkdiv_val[12][11] = {
 
 static struct s3c_freq clk_info[] = {
 	[L0] = {
-		.fclk       = 1700000,
-		.armclk     = 1700000,
+		.fclk       = 1900000,
+		.armclk     = 1900000,
 		.hclk_tns   = 0,
 		.hclk	    = 133000,
 		.pclk       = 66000,
@@ -195,8 +197,8 @@ static struct s3c_freq clk_info[] = {
 		.pclk_dsys  = 83375,
 	},
 	[L1] = {
-		.fclk       = 1600000,
-		.armclk     = 1600000,
+		.fclk       = 1700000,
+		.armclk     = 1700000,
 		.hclk_tns   = 0,
 		.hclk       = 133000,
 		.pclk       = 66000,
@@ -206,8 +208,8 @@ static struct s3c_freq clk_info[] = {
 		.pclk_dsys  = 83375,
 	},
 	[L2] = {
-		.fclk       = 1500000,
-		.armclk     = 1500000,
+		.fclk       = 1580000,
+		.armclk     = 1580000,
 		.hclk_tns   = 0,
 		.hclk       = 133000,
 		.pclk       = 66000,
@@ -217,8 +219,8 @@ static struct s3c_freq clk_info[] = {
 		.pclk_dsys  = 83375
 	},
 	[L3] = {
-		.fclk       = 1440000,
-		.armclk     = 1440000,
+		.fclk       = 1460000,
+		.armclk     = 1460000,
 		.hclk_tns   = 0,
 		.hclk       = 133000,
 		.pclk       = 66000,
@@ -228,7 +230,7 @@ static struct s3c_freq clk_info[] = {
 		.pclk_dsys  = 83375,
 	},
 	[L4] = {
-		.fclk       = 1400000,
+		.fclk       = 1300000,
 		.armclk     = 1400000,
 		.hclk_tns   = 0,
 		.hclk       = 133000,
@@ -239,7 +241,7 @@ static struct s3c_freq clk_info[] = {
 		.pclk_dsys  = 83375,
 	},
 	[L5] = {	
-		.fclk       = 1300000,
+		.fclk       = 1200000,
 		.armclk     = 1300000,
 		.hclk_tns   = 0,
 		.hclk       = 133000,
@@ -251,7 +253,7 @@ static struct s3c_freq clk_info[] = {
 	},
 		
 	[L6] = {
-		.fclk       = 1200000,
+		.fclk       = 1150000,
 		.armclk     = 1200000,
 		.hclk_tns   = 0,
 		.hclk       = 133000,
@@ -307,7 +309,7 @@ static struct s3c_freq clk_info[] = {
 	},
 	[L11] = {
 		.fclk       = 800000,
-		.armclk     = 100000,
+		.armclk     = 50000,
 		.hclk_tns   = 0,
 		.hclk       = 66000,
 		.pclk       = 66000,
@@ -316,6 +318,17 @@ static struct s3c_freq clk_info[] = {
 		.hclk_dsys  = 83375,
 		.pclk_dsys  = 83375,
 	},
+	[l12] = {
+		.fclk	    = 800000,
+		.armclk     = 19000,
+		.hcl_tns    = 0,
+		.hclk       = 66000,
+		.pclk       = 66000,
+		.hclk_msys  = 100000,
+		.pclk_msys  = 100000,
+		.hclk_dsys  = 83375,
+		.pclk_dsys  = 82275
+	}
 };
 
 static int s5pv210_cpufreq_verify_speed(struct cpufreq_policy *policy)
